@@ -1,13 +1,12 @@
-// include RadioLib
+#ifndef LORA_H_
+#define LORA_H_
+
 #include <RadioLib.h>
-
-// automatically detect which board is being used
 #define RADIO_BOARD_AUTO
-
-// now include RadioBoards
-// this must be included AFTER RadioLib!
 #include <RadioBoards.h>
 
-#define SMV_SYNC_WORD 0xB4
+#define SYNC_WORD 0xB4
 
-void radio_setup();
+void lora_setup();
+
+#endif

@@ -5,7 +5,7 @@
 #include "SD.h"
 #include "SPI.h"
 
-#define SDCARD_MOSI                 15
+#define SDCARD_MOSI                 11
 #define SDCARD_MISO                 2
 #define SDCARD_SCLK                 14
 #define SDCARD_CS                   13

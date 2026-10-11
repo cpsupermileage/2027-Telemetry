@@ -15,6 +15,7 @@ void setup() {
 }
 
 void loop() {
-  
+  radio_receive();
+  delay(1000); 
 }
 

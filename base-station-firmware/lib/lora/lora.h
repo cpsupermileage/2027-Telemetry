@@ -13,5 +13,5 @@
 #define SYNC_WORD 0xB4
 
 void radio_setup();
-
+void radio_receive();
 #endif

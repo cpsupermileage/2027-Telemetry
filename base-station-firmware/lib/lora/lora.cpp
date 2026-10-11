@@ -8,6 +8,18 @@ SX1262 radio = new Module(RADIO_CS_PIN, RADIO_DIO1_PIN, RADIO_RST_PIN, RADIO_BUS
 
 #define SMV_SYNC_WORD 0xB4
 
+// save transmission states between loops
+int transmissionState = RADIOLIB_ERR_NONE;
+
+// flag to indicate that a packet was sent or received
+volatile bool operationDone = false;
+
+void setFlag(void)
+{
+    // we sent or received a packet, set the flag
+    operationDone = true;
+}
+
 void radio_setup()
 {
     // initialize the radio
@@ -25,5 +37,49 @@ void radio_setup()
         Serial.println(state);
         while (true)
             ;
+    }
+
+    // set the function that will be called
+    // when new packet is received
+    radio.setDio1Action(setFlag);
+
+    radio.startReceive();
+
+}
+
+void radio_receive() {
+     // check if the previous operation finished
+    if (operationDone) {
+        // reset flag
+        operationDone = false;
+
+        radio.startReceive();
+
+        String str;
+        int state = radio.readData(str);
+
+        if (state == RADIOLIB_ERR_NONE) {
+
+
+            // packet was successfully received
+            Serial.println(F("[SX1262] Received packet!"));
+
+            // print data of the packet
+            Serial.print(F("[SX1262] Data:\t\t"));
+            Serial.println(str);
+
+            // print RSSI (Received Signal Strength Indicator)
+            Serial.print(F("[SX1262] RSSI:\t\t"));
+            Serial.print(radio.getRSSI());
+            Serial.println(F(" dBm"));
+
+            // print SNR (Signal-to-Noise Ratio)
+            Serial.print(F("[SX1262] SNR:\t\t"));
+            Serial.print(radio.getSNR());
+            Serial.println(F(" dB"));
+
+           
+        }
+
     }
 }

@@ -44,12 +44,13 @@ void radio_setup()
     radio.setDio1Action(setFlag);
 
     radio.startReceive();
-
 }
 
-void radio_receive() {
-     // check if the previous operation finished
-    if (operationDone) {
+void radio_receive()
+{
+    // check if the previous operation finished
+    if (operationDone)
+    {
         // reset flag
         operationDone = false;
 
@@ -58,8 +59,8 @@ void radio_receive() {
         String str;
         int state = radio.readData(str);
 
-        if (state == RADIOLIB_ERR_NONE) {
-
+        if (state == RADIOLIB_ERR_NONE)
+        {
 
             // packet was successfully received
             Serial.println(F("[SX1262] Received packet!"));
@@ -82,6 +83,5 @@ void radio_receive() {
             str.getBytes(buf, sizeof(buf));
             SD_write(buf, str.length());
         }
-
     }
 }

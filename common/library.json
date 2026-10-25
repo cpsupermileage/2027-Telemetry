@@ -1,0 +1,12 @@
+{
+    "name": "common",
+    "version": "1.0.0",
+    "license": "MIT",
+    "frameworks": "*",
+    "platforms": "*",
+    "headers": "common.h",
+    "build":
+    {
+        "libLDFMode": "chain+"
+    }
+}

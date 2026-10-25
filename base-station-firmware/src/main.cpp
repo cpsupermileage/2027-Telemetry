@@ -1,21 +1,19 @@
 #include <Arduino.h>
 #include "lora.h"
 #include "sd-logger.h"
-#include "oled.h" 
+#include "oled.h"
 
-
-
-void setup() {
+void setup()
+{
   Serial.begin(115200);
   delay(2000);
   SD_setup();
   radio_setup();
   oled_setup();
-
 }
 
-void loop() {
+void loop()
+{
   radio_receive();
-  delay(1000); 
+  delay(1000);
 }
-

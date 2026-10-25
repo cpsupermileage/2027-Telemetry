@@ -78,7 +78,9 @@ void radio_receive() {
             Serial.print(radio.getSNR());
             Serial.println(F(" dB"));
 
-           
+            unsigned char buf[256];
+            str.getBytes(buf, sizeof(buf));
+            SD_write(buf, str.length());
         }
 
     }

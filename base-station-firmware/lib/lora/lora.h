@@ -2,6 +2,7 @@
 #define LORA_H_
 
 #include <RadioLib.h>
+#include "sd-logger.h"
 #define RADIO_SCLK_PIN              5
 #define RADIO_MISO_PIN              3
 #define RADIO_MOSI_PIN              6

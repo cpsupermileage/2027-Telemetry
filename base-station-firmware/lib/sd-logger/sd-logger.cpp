@@ -2,6 +2,8 @@
 
 SPIClass SD_SPIHandle(HSPI);
 
+int file_index = 0; 
+
 void SD_setup()
 {
     // initialize the SD card
@@ -35,5 +37,34 @@ void SD_setup()
         Serial.println("UNKNOWN");
     }
 
+   if (!SD.exists("/index")) {
+        Serial.println("[SD] index file dosen't exist");
+        file_index = 0; 
+   }else {
+        File f = SD.open ("/index", FILE_READ); 
+        f.readBytes((char*)&file_index , sizeof(int));
+        f.close(); 
 
+        Serial.print("[SD] Read from index file ");
+        Serial.println(file_index);
+   }
+
+   file_index++;
+
+   File f = SD.open("/index" , FILE_WRITE);
+   f.write((uint8_t*)&file_index , sizeof(int));
+   f.close();
+
+   Serial.print("[SD] Set Index file to ");
+   Serial.println(file_index);
 }
+
+void SD_write(uint8_t *data,int len) {
+    char buf[8];
+    sprintf(buf, "/%06d", file_index);
+    File f = SD.open(buf, FILE_APPEND);
+    f.write(data, len);
+    f.close();
+
+    Serial.printf("[SD] Wrote %d bytes to file %s \n", len , buf);
+} 

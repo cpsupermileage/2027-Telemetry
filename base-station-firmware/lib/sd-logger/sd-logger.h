@@ -11,5 +11,6 @@
 #define SDCARD_CS                   13
 
 void SD_setup();
+void SD_write(uint8_t *data,int len);
 
 #endif

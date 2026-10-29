@@ -16,8 +16,7 @@ void vesc_setup()
     Serial.println("[VESC] Serial initialized!");
 }
 
-void vesc_get_values(void (*callback)(VescUart::dataPackage))
+void vesc_get_values()
 {
     conn.getVescValues();
-    callback(conn.data);
 }

@@ -41,7 +41,7 @@ void radio_setup()
 }
 
 // Blocking
-void radio_send(data_packet *data)
+boolean radio_send(data_packet *data)
 {
 
     Serial.print(F("[LORA] transmitting... "));
@@ -52,21 +52,25 @@ void radio_send(data_packet *data)
     {
         // the packet was successfully transmitted
         Serial.println(F("success!"));
+        return true;
     }
     else if (state == RADIOLIB_ERR_PACKET_TOO_LONG)
     {
         // the supplied packet was longer than 256 bytes
         Serial.println(F("too long!"));
+        return false;
     }
     else if (state == RADIOLIB_ERR_TX_TIMEOUT)
     {
         // timeout occured while transmitting packet
         Serial.println(F("timeout!"));
+        return false;
     }
     else
     {
         // some other error occurred
         Serial.print(F("failed, code "));
         Serial.println(state);
+        return false;
     }
 }

@@ -10,7 +10,7 @@ void vesc_setup()
 
 #ifdef VESC_AUTO_TX_RX
     Serial.printf("[VESC] Automatically configuring serial... (max attempts: %d)\n", VESC_AUTO_MAX_ATTEMPTS);
-    bool hasReceived = false;
+    boolean hasReceived = false;
     int attempt = 0;
     while (!hasReceived && attempt < VESC_AUTO_MAX_ATTEMPTS)
     {
@@ -39,7 +39,22 @@ void vesc_setup()
         Serial.println(F("[VESC] ERROR: Could not receive firmware version\n"));
 }
 
-void vesc_get_values()
+boolean vesc_populate(data_packet *data)
 {
-    conn.getVescValues();
+    if (!conn.getVescValues())
+    {
+        Serial.println(F("[VESC] Error: failed to receive vesc values"));
+        return false;
+    }
+
+    data->tempMOSFET = conn.data.tempMosfet;
+    data->tempMotor = conn.data.tempMotor;
+    data->motorCurrent = conn.data.avgMotorCurrent;
+    data->inputCurrent = conn.data.avgInputCurrent;
+    data->dutyCycle = conn.data.dutyCycleNow;
+    data->volts = conn.data.inpVoltage;
+    data->wattHours = conn.data.wattHours;
+    data->error = conn.data.error;
+    // May get overwritten by hall effect later
+    data->tacho = conn.data.tachometerAbs;
 }

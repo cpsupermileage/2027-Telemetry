@@ -2,7 +2,8 @@
 #define VESC_H_
 
 #include <HardwareSerial.h>
-#include "VescUart.h"
+#include <VescUart.h>
+#include "common.h"
 
 #define VESC_BAUD_RATE 9600
 
@@ -12,6 +13,6 @@
 #define VESC_AUTO_MAX_ATTEMPTS 160 // Each attempt takes ~100ms, cycling 4 different variations (switched/non-switched and inverted/non-inverted)
 
 void vesc_setup();
-void vesc_get_values();
+bool vesc_populate(data_packet *data);
 
 #endif

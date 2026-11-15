@@ -15,6 +15,6 @@
 #define SYNC_WORD 0xB4
 
 void radio_setup();
-void radio_send(data_packet *data);
+boolean radio_send(data_packet *data);
 
 #endif

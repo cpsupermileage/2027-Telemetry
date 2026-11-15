@@ -4,7 +4,7 @@ VescUart conn; // object that will recive all the values from vesc
 
 void vesc_setup()
 {
-    Serial.println("[VESC] Initializing...");
+    Serial.println(F("[VESC] Initializing..."));
 
     conn.setSerialPort(&Serial1);
 
@@ -31,12 +31,12 @@ void vesc_setup()
 
 #endif
 
-    Serial.println("[VESC] Serial initialized!");
+    Serial.println(F("[VESC] Serial initialized!"));
     bool gotFWVersion = conn.getFWversion();
     if (gotFWVersion)
         Serial.printf("[VESC] Firmware Version: %d.%d\n", conn.fw_version.major, conn.fw_version.minor);
     else
-        Serial.printf("[VESC] ERROR: Could not receive firmware version\n");
+        Serial.println(F("[VESC] ERROR: Could not receive firmware version\n"));
 }
 
 void vesc_get_values()

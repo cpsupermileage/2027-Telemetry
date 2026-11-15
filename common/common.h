@@ -1,6 +1,9 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#include "Arduino.h"
+#include "datatypes.h"
+
 // SMV
 // define the data struct globally, make it accessible to everything
 struct data_packet
@@ -13,11 +16,12 @@ struct data_packet
     float dutyCycle;
     float volts;
     float wattHours;
-    char error; // uint8_t
+    uint32_t error;
 
     // From hall effect sensor
     long tacho;
 
+    // From joulemeter
     float pdbVolts;
     float pdbCurrent;
 };

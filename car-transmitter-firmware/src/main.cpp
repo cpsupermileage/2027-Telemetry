@@ -1,6 +1,7 @@
 #include <Arduino.h>
-#include "lora.h"
 #include "vesc.h"
+#include "hall.h"
+#include "lora.h"
 
 void setup()
 {
@@ -9,9 +10,8 @@ void setup()
   delay(1000);
 
   vesc_setup();
+  hall_setup();
   radio_setup();
-
-  Serial.println("Sent!");
 }
 
 void loop()

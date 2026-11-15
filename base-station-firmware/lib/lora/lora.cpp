@@ -56,8 +56,8 @@ void radio_receive()
 
         radio.startReceive();
 
-        String str;
-        int state = radio.readData(str);
+        data_packet data;
+        int state = radio.readData((uint8_t*)&data ,sizeof(data));
 
         if (state == RADIOLIB_ERR_NONE)
         {
@@ -66,8 +66,8 @@ void radio_receive()
             Serial.println(F("[SX1262] Received packet!"));
 
             // print data of the packet
-            Serial.print(F("[SX1262] Data:\t\t"));
-            Serial.println(str);
+            Serial.print(F("[DATA] "));
+            Serial.write((uint8_t*)&data ,sizeof(data));
 
             // print RSSI (Received Signal Strength Indicator)
             Serial.print(F("[SX1262] RSSI:\t\t"));
@@ -79,9 +79,8 @@ void radio_receive()
             Serial.print(radio.getSNR());
             Serial.println(F(" dB"));
 
-            unsigned char buf[256];
-            str.getBytes(buf, sizeof(buf));
-            SD_write(buf, str.length());
+            
+            SD_write(data);
         }
     }
 }

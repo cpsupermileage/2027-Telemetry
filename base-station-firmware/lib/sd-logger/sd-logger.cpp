@@ -68,13 +68,34 @@ void SD_setup()
     Serial.println(file_index);
 }
 
-void SD_write(uint8_t *data, int len)
+void SD_write(data_packet data)
 {
-    char buf[8];
-    sprintf(buf, "/%06d", file_index);
+    char buf[12];
+    sprintf(buf, "/%06d.csv", file_index);
     File f = SD.open(buf, FILE_APPEND);
-    f.write(data, len);
+    f.print(data.tempMOSFET);
+    f.print(",");
+    f.print(data.tempMotor); 
+    f.print(","); 
+    f.print(data.motorCurrent);
+    f.print(","); 
+    f.print(data.inputCurrent); 
+    f.print(","); 
+    f.print(data.dutyCycle); 
+    f.print(",");
+    f.print(data.volts);
+    f.print(","); 
+    f.print(data.wattHours); 
+    f.print(","); 
+    f.print(data.error);
+    f.print(","); 
+    f.print(data.tacho); 
+    f.print(",");
+    f.print(data.pdbVolts); 
+    f.print(","); 
+    f.print(data.pdbCurrent); 
+    f.print("\n");
     f.close();
 
-    Serial.printf("[SD] Wrote %d bytes to file %s \n", len, buf);
+    Serial.printf("[SD] Wrote %d bytes to file %s \n", sizeof(data), buf);
 }
